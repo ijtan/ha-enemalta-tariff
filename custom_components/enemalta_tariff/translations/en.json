@@ -1,0 +1,51 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Enemalta Tariff Cost",
+        "description": "Calculate the running cost of your electricity against Enemalta's (Malta) pro-rated tariffs. Point this at a cumulative energy sensor (a total that only climbs).",
+        "data": {
+          "source_entity": "Energy sensor (cumulative total)",
+          "source_is_wh": "Source reads in Wh (divide by 1000)",
+          "tariff_type": "Tariff type",
+          "phase": "Supply phase",
+          "residents": "Registered residents",
+          "vat_percent": "VAT percent (Non-Residential only)",
+          "primary_residence": "Primary residence (Eco-Reduction eligible)",
+          "include_service_charge": "Include service charge",
+          "period_start": "Billing period start date"
+        }
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Enemalta Tariff Cost settings",
+        "description": "Adjust tariff settings. To start a new billing period cleanly, press the 'Reset billing period' button instead of changing the start date here.",
+        "data": {
+          "source_is_wh": "Source reads in Wh (divide by 1000)",
+          "tariff_type": "Tariff type",
+          "phase": "Supply phase",
+          "residents": "Registered residents",
+          "vat_percent": "VAT percent (Non-Residential only)",
+          "primary_residence": "Primary residence (Eco-Reduction eligible)",
+          "include_service_charge": "Include service charge",
+          "period_start": "Billing period start date"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "electricity_cost": {
+        "name": "Electricity cost"
+      }
+    },
+    "button": {
+      "reset_billing_period": {
+        "name": "Reset billing period"
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "domain": "enemalta_tariff",
+  "name": "Enemalta Tariff Cost",
+  "codeowners": ["@ijtan"],
+  "config_flow": true,
+  "documentation": "https://github.com/ijtan/ha-enemalta-tariff",
+  "integration_type": "service",
+  "iot_class": "calculated",
+  "issue_tracker": "https://github.com/ijtan/ha-enemalta-tariff/issues",
+  "requirements": [],
+  "version": "3.0.0"
+}

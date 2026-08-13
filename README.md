@@ -1,13 +1,25 @@
 # Enemalta Tariff Cost Calculator for Home Assistant
 
-A Home Assistant **package** that calculates the running cost of your
-electricity consumption against [Enemalta](https://www.enemalta.com.mt/)'s
-(Malta) cumulative-band tariffs — **Residential**, **Domestic**, and
-**Non-Residential** — including the residential **Eco-Reduction** estimate.
+[![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://github.com/hacs/integration)
 
-No custom component to install: it's pure YAML (a `utility_meter` plus a
-template sensor and a few helpers), so it works on any Home Assistant install
-and is easy to inspect and adjust.
+Calculates the running cost of your electricity consumption against
+[Enemalta](https://www.enemalta.com.mt/)'s (Malta) cumulative-band tariffs —
+**Residential**, **Domestic**, and **Non-Residential** — including the
+residential **Eco-Reduction** estimate.
+
+Two ways to install:
+
+- **Custom integration (recommended)** — install via **HACS** and set it up
+  entirely in the UI (config flow, no YAML). Adds an
+  `sensor.*_electricity_cost` entity, a **Reset billing period** button, and an
+  options screen to tweak settings. This is a fork of
+  [beta-j/ha-enemalta-tariff](https://github.com/beta-j/ha-enemalta-tariff)
+  that adds HACS + UI support.
+- **Pure-YAML package** — the original approach (a `utility_meter` plus a
+  template sensor and helpers). No custom component; works on any install and
+  is easy to inspect. See [Manual YAML package](#manual-yaml-package) below.
+
+Both use the **same** pro-rata band engine and rates.
 
 > ⚠️ **Information only.** Every effort is made to keep the rates accurate, but
 > this is an estimate. Always verify against your ARMS bill. In the event of
@@ -53,9 +65,38 @@ work this out on its own — you tell it your **billing-period start date** and
 
 ---
 
-## Installation
+## Installation (HACS — recommended)
 
-1. Copy `packages/enemalta_tariff.yaml` to your config:
+1. **HACS → ⋮ → Custom repositories**, add
+   `https://github.com/ijtan/ha-enemalta-tariff` with category **Integration**.
+2. Search HACS for **Enemalta Tariff Cost**, install it, and **restart** Home
+   Assistant.
+3. **Settings → Devices & Services → + Add Integration → Enemalta Tariff
+   Cost**.
+4. In the config dialog:
+   - **Energy sensor** — pick your **cumulative** kWh sensor (a total that only
+     climbs; `total_increasing`). A momentary *power* (W) sensor won't work —
+     see [Wh vs kWh / power vs energy](#wh-vs-kwh--power-vs-energy).
+   - **Source reads in Wh** — enable if your sensor is in Wh (common on
+     Tuya/LocalTuya plugs); the integration divides by 1000.
+   - Set **tariff type, phase, residents, VAT, primary residence, service
+     charge**, and the **billing period start date** from your current ARMS
+     bill.
+5. Consumption is measured from the reading captured at setup. When each new
+   ARMS bill period begins, press the **Reset billing period** button — it
+   re-baselines consumption and sets the start date to today.
+
+Change any setting later via the integration's **Configure** (⚙) button. The
+`sensor.*_electricity_cost` entity exposes the same attributes as the YAML
+version (`consumption_kwh`, `period_days`, `band1_allowance_this_period`, …).
+
+---
+
+## Manual YAML package
+
+Prefer no custom component? Use the pure-YAML package instead.
+
+1. Copy `enemalta_tariff.yaml` to your config:
    `<config>/packages/enemalta_tariff.yaml`
    (create the `packages` folder if it doesn't exist).
 

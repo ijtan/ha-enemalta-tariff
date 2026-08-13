@@ -8,6 +8,22 @@ users can tell at a glance whether a release is current.
 
 ## [Unreleased]
 
+## [3.0.0] - 2026-08-13
+### Added
+- **HACS-installable custom integration** with full **UI setup** (config flow),
+  in `custom_components/enemalta_tariff/`. Setup, tariff settings, and the
+  billing-period start date are all configured in the UI — no YAML required.
+- **Reset billing period** button entity that re-baselines consumption and sets
+  the start date to today, replacing the manual `utility_meter.reset` step.
+- **Options flow** to adjust tariff settings after setup, and Wh→kWh conversion
+  as a config toggle.
+- Root `hacs.json` and repo metadata for HACS custom-repository installation.
+
+### Notes
+- The cost engine is a faithful Python port of the v2.1.0 Jinja template;
+  outputs verified identical across sample inputs. The pure-YAML package
+  remains available and unchanged for those who prefer it.
+
 ## [2.1.0] - 2026-06-08
 ### Validated
 - Full cost model checked against **four real ARMS bills** (Jun 2025 – Feb
